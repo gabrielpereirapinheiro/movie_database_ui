@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 
-class HomePage extends Component {
+function HomePage() {
 
-    render() {
-        return (
-            <div >
-                homepage
-            </div>
-        );
-    }
+    return (
+        <div >
+            homepage
+        </div>
+    );
 }
 
 export default HomePage;

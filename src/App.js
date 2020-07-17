@@ -5,26 +5,19 @@ import './App.css';
 //Routes
 import HomePage from './containers/HomePage/HomePage'
 
-class App extends Component {
+const App = props => {
+  let routes = (
+    <Switch>
+      <Route path="/" exact component={HomePage} />
+      <Redirect to="/" />
+    </Switch>
+  )
 
-  componentDidMount() {
-  }
-
-  render() {
-
-    let routes = (
-      <Switch>
-        <Route path="/" exact component={HomePage} />
-        <Redirect to="/" />
-      </Switch>
-    )
-
-    return (
-      <div>
-        {routes}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {routes}
+    </div>
+  );
+};
 
 export default App;
