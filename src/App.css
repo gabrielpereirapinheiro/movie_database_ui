@@ -12,6 +12,13 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.line{
+  width: 100%;
+}
+.title-login{
+  text-align: left;
+  margin-left: 29px;
+}
 
 .App-header {
   background-color: #282c34;
@@ -22,10 +29,22 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  width: 100vw;
+  background-color: transparent;
 }
 
 .App-link {
   color: #61dafb;
+}
+.makeStyles-appBarShift-6 {
+  background-color: transparent !important;
+}
+.makeStyles-appBarShift-7 {
+  background-color: transparent !important;
+}
+
+.MuiPaper-elevation4 {
+  box-shadow: none !important; 
 }
 
 @keyframes App-logo-spin {

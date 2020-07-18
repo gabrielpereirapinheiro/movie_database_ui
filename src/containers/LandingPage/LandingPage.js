@@ -10,10 +10,30 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import SearchIcon from '@material-ui/icons/Search';
+import backgroundLandingPage from '../../assets/img/background.jpg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        height: "100vh",
+        backgroundImage: `url(${backgroundLandingPage})`
+    },
+    buttonSignIn: {
+        backgroundColor: "#e50914",
+        lineHeight: "normal",
+        padding: "7px 17px",
+        fontWeight: 400,
+        fontSize: "1rem",
+        float: "right",
+    },
+    titleNavBar: {
+        color: "#e50914",
+        fontFamily: "nf-icon",
+        speak: "none",
+        fontStyle: "normal",
+        fontWeight: 400,
+        fontVariant: "normal",
+        textTransform: "none"
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -36,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     appBarShift: {
         marginLeft: 340,
         backgroundColor: '#ffffff',
-        width: `calc(100% - 340px)`,
+        width: `calc(100%)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -123,41 +143,12 @@ export default function Dashboard() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <h1>TMDb</h1>
-                    <IconButton color="#000000">
-                        <SearchIcon />
+                    <h1 className={classes.titleNavBar}>TMDb</h1>
+                    <IconButton >
+                        <button className={classes.buttonSignIn}>Entrar</button>
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                {/* <Items menuSelected={menuSelected} setMenuSelected={setMenuSelected} setStep={setStep} open={open}/> */}
-            </Drawer>
-            <main className={classes.content}>
-                {
-                    menuSelected === 'material' && (<h1>5</h1>)
-                }
-                {
-                    menuSelected === 'adopt' && (<h1>3</h1>)
-                }
-                {
-                    menuSelected === 'classes' && (<h1>1</h1>)
-                }
-                {
-                    menuSelected === 'covid' && (<h1>2</h1>)
-                }
-            </main>
         </div>
     );
 }
