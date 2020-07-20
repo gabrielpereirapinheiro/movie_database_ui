@@ -141,7 +141,6 @@ export default function Dashboard() {
                 });
                 setTimeout(function () {
                     setLoading(true);
-
                     window.location.reload()
                 }, 1500);
             })

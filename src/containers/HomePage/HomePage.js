@@ -13,10 +13,9 @@ import Slider from "react-slick";
 import OwlCarousel from 'react-owl-carousel';
 import SearchIcon from '@material-ui/icons/Search';
 import loading from '../../assets/img/loading.gif';
-import netflix from '../../assets/img/netflix.svg';
-
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -121,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
+    const [showinput, setShowinput] = useState(false);
     const [result, setResult] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
@@ -163,13 +163,15 @@ export default function Dashboard() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    {/* <h1 className={classes.titleNavBar}>TMDb</h1>
-                     */}
+                    <h1 className={classes.titleNavBar}>TMDb</h1>
+                    {showinput ? (
+                        <IconButton >
+                            <TextField id="standard-basic" label="Standard" />
+                        </IconButton>
+                    ) : (null)}
 
-<img alt="logo_preto" src={netflix}  />
-                     
                     <IconButton >
-                        <SearchIcon />
+                        <SearchIcon onClick={() => setShowinput(true)} />
                     </IconButton>
                     <IconButton >
                         <Link to="/logout">
@@ -191,17 +193,15 @@ export default function Dashboard() {
                             dots={false}
                             nav
                         >
-                            
                             {result.map(function (movie, i) {
                                 return <div class="item" key={i}>
                                     <div className="div-slide">
                                         <img className="img-slide" src={"https://image.tmdb.org/t/p/w780/" + movie.poster_path}></img>
+                                        <p class="img__description">{movie.overview}</p>
                                     </div>
                                 </div>
                             })}
-                 
                         </OwlCarousel>
-
                     )}
             </div>
         </div>
