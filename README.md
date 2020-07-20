@@ -22,5 +22,5 @@ npm i
 - To run the project in this mode, use the command below:
 
 `` 
-start npm
+npm start
 `` 
