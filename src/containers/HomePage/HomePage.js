@@ -2,18 +2,45 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import backgroundLandingPage from '../../assets/img/background.jpg';
+import { Link } from 'react-router-dom';
+import axios from "../../axios";
+import Slider from "react-slick";
+import OwlCarousel from 'react-owl-carousel';
 import SearchIcon from '@material-ui/icons/Search';
+import loading from '../../assets/img/loading.gif';
+import netflix from '../../assets/img/netflix.svg';
+
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        height: "100vh",
+        backgroundImage: `url(${backgroundLandingPage})`,
+        backgroundSize: "100vw"
+    },
+    buttonSignIn: {
+        backgroundColor: "#e50914",
+        lineHeight: "normal",
+        padding: "7px 17px",
+        fontWeight: 400,
+        fontSize: "1rem",
+        float: "right",
+    },
+    titleNavBar: {
+        color: "#e50914",
+        fontFamily: "nf-icon",
+        speak: "none",
+        fontStyle: "normal",
+        fontWeight: 400,
+        fontVariant: "normal",
+        textTransform: "none"
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -36,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     appBarShift: {
         marginLeft: 340,
         backgroundColor: '#ffffff',
-        width: `calc(100% - 340px)`,
+        width: `calc(100%)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -94,13 +121,27 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
-    const [step, setStep] = useState(0);
-    const [menuSelected, setMenuSelected] = useState('adopt');
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
+    const [result, setResult] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios.getTrending()
+            .then((response) => {
+                setResult(response.data.results);
+                setLoading(false);
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+            });
+    }, []);
+
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1
     };
 
     return (
@@ -115,7 +156,6 @@ export default function Dashboard() {
                         edge="start"
                         color="#000000"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
                         className={clsx(
                             classes.menuButton,
                             open && classes.menuButtonHidden,
@@ -123,41 +163,48 @@ export default function Dashboard() {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <h1>TMDb</h1>
-                    <IconButton color="#000000">
+                    {/* <h1 className={classes.titleNavBar}>TMDb</h1>
+                     */}
+
+<img alt="logo_preto" src={netflix}  />
+                     
+                    <IconButton >
                         <SearchIcon />
+                    </IconButton>
+                    <IconButton >
+                        <Link to="/logout">
+                            <button className={classes.buttonSignIn}>Sair</button>
+                        </Link>
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <Drawer
-                variant="permanent"
-                classes={{
-                    paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbarIcon}>
-                    <IconButton onClick={handleDrawerClose}>
-                        <ChevronLeftIcon />
-                    </IconButton>
-                </div>
-                <Divider />
-                {/* <Items menuSelected={menuSelected} setMenuSelected={setMenuSelected} setStep={setStep} open={open}/> */}
-            </Drawer>
-            <main className={classes.content}>
-                {
-                    menuSelected === 'material' && (<h1>5</h1>)
-                }
-                {
-                    menuSelected === 'adopt' && (<h1>3</h1>)
-                }
-                {
-                    menuSelected === 'classes' && (<h1>1</h1>)
-                }
-                {
-                    menuSelected === 'covid' && (<h1>2</h1>)
-                }
-            </main>
+            <div className="card-container">
+                {isLoading ? (
+                    <div className="App-header App">
+                        <img src={loading} className={classes.loadingimg} />
+                    </div>
+                ) : (
+                        <OwlCarousel
+                            className="owl-theme"
+                            loop
+                            margin={10}
+                            dots={false}
+                            nav
+                        >
+                            
+                            {result.map(function (movie, i) {
+                                return <div class="item" key={i}>
+                                    <div className="div-slide">
+                                        <img className="img-slide" src={"https://image.tmdb.org/t/p/w780/" + movie.poster_path}></img>
+                                    </div>
+                                </div>
+                            })}
+                 
+                        </OwlCarousel>
+
+                    )}
+            </div>
         </div>
+
     );
 }

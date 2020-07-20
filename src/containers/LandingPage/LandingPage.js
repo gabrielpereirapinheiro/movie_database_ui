@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import SearchIcon from '@material-ui/icons/Search';
 import backgroundLandingPage from '../../assets/img/background.jpg';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         height: "100vh",
-        backgroundImage: `url(${backgroundLandingPage})`
+        backgroundImage: `url(${backgroundLandingPage})`,
+        backgroundSize: "100vw"
     },
     buttonSignIn: {
         backgroundColor: "#e50914",
@@ -123,6 +121,8 @@ export default function Dashboard() {
         setOpen(false);
     };
 
+
+
     return (
         <div className={classes.root}>
             <CssBaseline />
@@ -145,7 +145,9 @@ export default function Dashboard() {
                     </IconButton>
                     <h1 className={classes.titleNavBar}>TMDb</h1>
                     <IconButton >
-                        <button className={classes.buttonSignIn}>Entrar</button>
+                        <Link to="/login">
+                            <button className={classes.buttonSignIn}>Entrar</button>
+                        </Link>
                     </IconButton>
                 </Toolbar>
             </AppBar>

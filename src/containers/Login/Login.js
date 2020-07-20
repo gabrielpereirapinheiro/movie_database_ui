@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
+// import CssBaseline from '@material-ui/core/CssBaseline';
+// import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Divider from '@material-ui/core/Divider';
+// import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import SearchIcon from '@material-ui/icons/Search';
+// import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+// import SearchIcon from '@material-ui/icons/Search';
 import backgroundLandingPage from '../../assets/img/background.jpg';
 import TextField from '@material-ui/core/TextField';
+import axios from "../../axios";
+import Cookies from "js-cookie";
+import loading from '../../assets/img/loading.gif';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         height: "100vh",
-        backgroundImage: `url(${backgroundLandingPage})`
+        backgroundImage: `url(${backgroundLandingPage})`,
+        backgroundSize: "100vw"
     },
     card: {
         width: "25vw",
@@ -121,14 +126,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [open, setOpen] = useState(true);
-    const [step, setStep] = useState(0);
-    const [menuSelected, setMenuSelected] = useState('adopt');
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-    const handleDrawerClose = () => {
-        setOpen(false);
+    const [isLoading, setLoading] = useState(false);
+
+
+    const getToken = () => {
+        setLoading(true);
+        axios.getToken()
+            .then((response) => {
+                const expirationDate = new Date(response.data.expires_at);
+
+                Cookies.set('token', response.data.request_token, {
+                    expires: expirationDate,
+                    secure: (window.location.protocol === 'https:')
+                });
+                setTimeout(function () {
+                    setLoading(true);
+
+                    window.location.reload()
+                }, 1500);
+            })
+            .catch((error) => {
+                setLoading(false);
+                console.log(error);
+            });
     };
 
     return (
@@ -136,17 +156,15 @@ export default function Dashboard() {
             {/* <CssBaseline /> */}
             <AppBar
                 position="absolute"
-                className={clsx(classes.appBar, open && classes.appBarShift)}
+                className={clsx(classes.appBar)}
             >
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"
                         color="#000000"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
                         className={clsx(
                             classes.menuButton,
-                            open && classes.menuButtonHidden,
                         )}
                     >
                         <MenuIcon />
@@ -154,26 +172,30 @@ export default function Dashboard() {
                     <h1 className={classes.titleNavBar}>TMDb</h1>
                 </Toolbar>
             </AppBar>
-            <div className="App-header App">
+            {isLoading ? (
+                <div className="App-header App">
+                    <img src={loading} className={classes.loadingimg} />
+                </div>
+            ) : (<div className="App-header App">
                 <div className={classes.card}>
                     <div className="line title-login">
                         <h1>Entrar</h1>
                     </div>
                     <div className="line">
                         <form noValidate autoComplete="off">
-                            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                            <TextField id="outlined-basic" label="Email" variant="outlined" />
                         </form>
                     </div>
                     <div className="line">
                         <form noValidate autoComplete="off">
-                            <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                            <TextField id="outlined-basic" label="Senha" variant="outlined" />
                         </form>
                     </div>
                     <div className="line">
-                        <button>Entrar</button>
+                        <button onClick={getToken}>Entrar</button>
                     </div>
                 </div>
-            </div>
+            </div>)}
         </div>
     );
 }
