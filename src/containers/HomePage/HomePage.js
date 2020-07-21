@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
         ...theme.mixins.toolbar,
     },
     appBar: {
-        backgroundColor: '#ffffff',
+        backgroundColor: '#141414',
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     },
     appBarShift: {
         marginLeft: 340,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#141414',
         width: `calc(100%)`,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
@@ -157,10 +157,9 @@ export default function Dashboard() {
                         aria-label="open drawer"
                         className={clsx(
                             classes.menuButton,
-                            
+
                         )}
                     >
-                        <MenuIcon />
                     </IconButton>
                     <h1 className={classes.titleNavBar}>TMDb</h1>
                     {showinput ? (
@@ -198,7 +197,7 @@ export default function Dashboard() {
                             {result.map(function (movie, i) {
                                 return <div class="item" key={i}>
                                     <div className="div-slide">
-                                        <img alt="poster" className="img-slide" src={"https://image.tmdb.org/t/p/w780/" + movie.poster_path}></img>
+                                        <img alt="poster" className="img-slide" src={process.env.REACT_APP_BASE_IMAGE + movie.poster_path}></img>
                                         <p class="img__description">{movie.overview}</p>
                                     </div>
                                 </div>
