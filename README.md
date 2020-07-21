@@ -6,8 +6,6 @@
 
 [Npm](https://www.npmjs.com/) - **6.11.3**
 
-## About
-
 ## Project Installation
 
 - To install as project dependencies, run the following command:
