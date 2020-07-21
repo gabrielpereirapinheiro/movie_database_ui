@@ -112,16 +112,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
     const classes = useStyles();
     const [open, setOpen] = useState(true);
-    const [step, setStep] = useState(0);
-    const [menuSelected, setMenuSelected] = useState('adopt');
     const handleDrawerOpen = () => {
         setOpen(true);
     };
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
-
-
 
     return (
         <div className={classes.root}>

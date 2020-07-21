@@ -1,19 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import SearchIcon from '@material-ui/icons/Search';
 import loading from '../../assets/img/loading.gif';
 import backgroundLandingPage from '../../assets/img/background.jpg';
-import TextField from '@material-ui/core/TextField';
-import axios from "../../axios";
 import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
@@ -126,13 +119,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [open, setOpen] = useState(true);
-    const [step, setStep] = useState(0);
-    const [menuSelected, setMenuSelected] = useState('adopt');
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
-
     useEffect(() => {
         Cookies.remove('token');
         setTimeout(function () {
@@ -142,20 +128,17 @@ export default function Dashboard() {
 
     return (
         <div className={classes.root}>
-            {/* <CssBaseline /> */}
             <AppBar
                 position="absolute"
-                className={clsx(classes.appBar, open && classes.appBarShift)}
+                className={clsx(classes.appBar)}
             >
                 <Toolbar className={classes.toolbar}>
                     <IconButton
                         edge="start"
                         color="#000000"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
                         className={clsx(
                             classes.menuButton,
-                            open && classes.menuButtonHidden,
                         )}
                     >
                         <MenuIcon />
@@ -164,7 +147,7 @@ export default function Dashboard() {
                 </Toolbar>
             </AppBar>
             <div className="App-header App">
-                <img src={loading} className={classes.loadingimg} />
+                <img alt="loading" src={loading} className={classes.loadingimg} />
             </div>
         </div>
     );

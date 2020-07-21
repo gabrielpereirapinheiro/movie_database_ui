@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-// import CssBaseline from '@material-ui/core/CssBaseline';
-// import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-// import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-// import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-// import SearchIcon from '@material-ui/icons/Search';
 import backgroundLandingPage from '../../assets/img/background.jpg';
 import TextField from '@material-ui/core/TextField';
 import axios from "../../axios";
@@ -152,7 +147,6 @@ export default function Dashboard() {
 
     return (
         <div className={classes.root}>
-            {/* <CssBaseline /> */}
             <AppBar
                 position="absolute"
                 className={clsx(classes.appBar)}
@@ -173,7 +167,7 @@ export default function Dashboard() {
             </AppBar>
             {isLoading ? (
                 <div className="App-header App">
-                    <img src={loading} className={classes.loadingimg} />
+                    <img alt="loading" src={loading} className={classes.loadingimg} />
                 </div>
             ) : (<div className="App-header App">
                 <div className={classes.card}>

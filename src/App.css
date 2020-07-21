@@ -44,7 +44,9 @@
 .owl-nav {
 display: none;
 }
-
+.MuiIconButton-root {
+  color: #fff !important;
+}
 .div-slide:hover .img__description {
   visibility: visible;
   opacity: 1;

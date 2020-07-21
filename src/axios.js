@@ -26,4 +26,7 @@ export default {
     getTrending() {
         return instance.get(process.env.REACT_APP_BASE_URL + 'trending/all/day?api_key=' + process.env.REACT_APP_API_KEY);
     },
+    getGenre() {
+        return instance.get(process.env.REACT_APP_BASE_URL + 'genre/movie/list?api_key=' + process.env.REACT_APP_API_KEY + '&language=en-US');
+    },
 };

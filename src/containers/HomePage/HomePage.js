@@ -6,10 +6,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import backgroundLandingPage from '../../assets/img/background.jpg';
+// import backgroundLandingPage from '../../assets/img/background.jpg';
 import { Link } from 'react-router-dom';
 import axios from "../../axios";
-import Slider from "react-slick";
 import OwlCarousel from 'react-owl-carousel';
 import SearchIcon from '@material-ui/icons/Search';
 import loading from '../../assets/img/loading.gif';
@@ -21,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         height: "100vh",
-        backgroundImage: `url(${backgroundLandingPage})`,
+        // backgroundImage: `url(${backgroundLandingPage})`,
+        backgroundColor: "#141414",
         backgroundSize: "100vw"
     },
     buttonSignIn: {
@@ -119,9 +119,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [open, setOpen] = useState(true);
     const [showinput, setShowinput] = useState(false);
     const [result, setResult] = useState([]);
+    const [genreList, setGenreList] = useState([]);
     const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -129,27 +129,26 @@ export default function Dashboard() {
             .then((response) => {
                 setResult(response.data.results);
                 setLoading(false);
-            })
-            .catch((error) => {
+            }).catch((error) => {
                 setLoading(false);
                 console.log(error);
             });
-    }, []);
 
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1
-    };
+        axios.getGenre()
+            .then((response) => {
+                setGenreList(response.data.genres);
+                // console.log(genreList);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <div className={classes.root}>
             <CssBaseline />
             <AppBar
                 position="absolute"
-                className={clsx(classes.appBar, open && classes.appBarShift)}
+                className={clsx(classes.appBar)}
             >
                 <Toolbar className={classes.toolbar}>
                     <IconButton
@@ -158,7 +157,7 @@ export default function Dashboard() {
                         aria-label="open drawer"
                         className={clsx(
                             classes.menuButton,
-                            open && classes.menuButtonHidden,
+                            
                         )}
                     >
                         <MenuIcon />
@@ -181,11 +180,14 @@ export default function Dashboard() {
                 </Toolbar>
             </AppBar>
             <div className="card-container">
-                {isLoading ? (
-                    <div className="App-header App">
-                        <img src={loading} className={classes.loadingimg} />
-                    </div>
-                ) : (
+                {isLoading ?
+                    (
+                        <div className="App-header App">
+                            <img alt="loading" src={loading} className={classes.loadingimg} />
+                        </div>
+                    )
+                    :
+                    (
                         <OwlCarousel
                             className="owl-theme"
                             loop
@@ -196,7 +198,7 @@ export default function Dashboard() {
                             {result.map(function (movie, i) {
                                 return <div class="item" key={i}>
                                     <div className="div-slide">
-                                        <img className="img-slide" src={"https://image.tmdb.org/t/p/w780/" + movie.poster_path}></img>
+                                        <img alt="poster" className="img-slide" src={"https://image.tmdb.org/t/p/w780/" + movie.poster_path}></img>
                                         <p class="img__description">{movie.overview}</p>
                                     </div>
                                 </div>
